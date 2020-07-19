@@ -1,42 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
-import { CATEGORIES, MEALS } from '../data/dummy-data';
-import Colors from '../constants/Colors'
-import MealItem from '../components/MealItem';
+import { CATEGORIES } from '../data/dummy-data';
+import MealList from '../components/MealList';
 
 const CategoryMealsScreen = props => {
 
-    const renderMealItem = itemData => {
-        return (
-            <MealItem
-                title={itemData.item.title}
-                duration={itemData.item.duration}
-                image={itemData.item.imageUrl}
-                complexity={itemData.item.complexity}
-                affordability={itemData.item.affordability}
-                onSelectMeal={() => {
-                    props.navigation.navigate({
-                        routeName: 'MealDetail', params: {
-                            mealId: itemData.item.id
-                        }
-                    })
-                }} />
-        )
-    }
     const catId = props.navigation.getParam('categoryId');
 
-    const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+    const availableMeals = useSelector(state => state.meals.filteredMeals);
 
-    return (
-        <View style={styles.screen}>
-            <FlatList
-                data={displayedMeals}
-                keyExtractor={(item, index) => item.id}
-                renderItem={renderMealItem}
-                style={{ width: '100%' }}
-            />
-        </View>
-    );
+    const displayedMeals = availableMeals.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+
+    return <MealList listData={displayedMeals} navigation={props.navigation} />
 };
 
 CategoryMealsScreen.navigationOptions = navigationData => {
@@ -47,13 +23,5 @@ CategoryMealsScreen.navigationOptions = navigationData => {
         headerTitle: selectedCategory.title,
     }
 }
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-});
 
 export default CategoryMealsScreen;

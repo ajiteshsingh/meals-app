@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import DefaulText from '../components/DefaultText';
 
 const MealItem = props => {
     return (
@@ -14,9 +15,9 @@ const MealItem = props => {
                         </ImageBackground>
                     </View>
                     <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-                        <Text>{props.duration}m</Text>
-                        <Text>{props.complexity.toUpperCase()}</Text>
-                        <Text>{props.affordability.toUpperCase()}</Text>
+                        <DefaulText>{props.duration}m</DefaulText>
+                        <DefaulText>{props.complexity.toUpperCase()}</DefaulText>
+                        <DefaulText>{props.affordability.toUpperCase()}</DefaulText>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -30,7 +31,8 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#f5f5f5',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginVertical: 10
     },
     mealRow: {
         flexDirection: 'row',
